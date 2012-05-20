@@ -1,0 +1,16 @@
+<div metal:use-macro="layout">
+    <div metal:fill-slot="content">
+<span metal:use-macro="load: breadcrumb.pt"></span>      
+<ul>
+  <li>Name: ${object.name}</li>
+  <li>Content Type: ${object.properties['cmis:objectTypeId']}</li>
+  <span tal:condition="object.getAllowableActions()['canGetContentStream']">
+      <li>File Type: ${object.properties['cmis:contentStreamMimeType']}</li>
+      <li>Size: ${object.properties['cmis:contentStreamLength']}</li>
+      <li><a href="/file${path}">Download</a></li>
+  </span>
+  <li>Created: ${object.properties['cmis:creationDate']} by ${object.properties['cmis:createdBy']}</li>
+  <li>Modified: ${object.properties['cmis:lastModificationDate']} by ${object.properties['cmis:lastModifiedBy']}</li>   
+</ul>
+</div>
+</div>

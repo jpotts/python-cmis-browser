@@ -1,0 +1,10 @@
+<div metal:use-macro="layout">
+    <div metal:fill-slot="content">
+    	 <h2>Welcome to the CMIS Browser</h2>
+	 <h3>Powered by Pyramid, Python, cmislib, & Alfresco</h3>
+	 <p>This is a simple little demo that shows one way to use Python to build a CMIS Browser.</p>
+	 <p>This version of the application is configured to log in to an Alfresco repository using a single username and password for everyone that uses the application. Currently, it is configured to use <em>${username}</em>.</p>
+	 <p>To browse the repository, select one of the links above, or simply navigate to /path/some/path/in/alfresco.</p>
+	 <p>Have fun!</p>
+    </div>
+</div>

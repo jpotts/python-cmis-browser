@@ -1,0 +1,14 @@
+<span metal:define-macro="header">
+<?python
+plist = path.split('/')
+breadcrumbs = []
+for i in range(len(plist)):
+    if i == 0:
+       breadcrumbs.append('<a href="/path/">root</a>')
+    elif i == len(plist) - 1:
+       breadcrumbs.append(plist[i])
+    else:
+       breadcrumbs.append('<a href="/path' + '/'.join(plist[:i+1]) + '">' + plist[i] + '</a>')
+?>
+<p>Path: ${structure: ' / '.join(breadcrumbs)}</p>
+</span>

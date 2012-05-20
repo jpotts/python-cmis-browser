@@ -1,0 +1,3 @@
+<span metal:define-macro="nav">
+<a href="/">Home</a> | <a href="/path/Sites">Sites</a> | <a href="/path/">Repository</a> | <a href="/about">About</a>
+</span>

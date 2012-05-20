@@ -1,0 +1,46 @@
+<div metal:use-macro="layout">
+    <div metal:fill-slot="content">
+<span metal:use-macro="load: breadcrumb.pt"></span>
+<span metal:use-macro="load: paging.pt"></span>
+<ul>
+<li tal:repeat="child children" tal:switch="child.getAllowableActions()['canGetChildren']">
+    <a tal:case="True" href="/path${child.getPaths()[0]}">${child.name}</a>
+        <span tal:case="False"><a href="/details${child.getPaths()[0]}">${child.name}</a> (${child.properties['cmis:contentStreamMimeType']}, ${child.properties['cmis:contentStreamLength']} bytes)</span>
+    <span tal:condition="child.getAllowableActions()['canDeleteObject'] or child.getAllowableActions()['canDeleteTree']">
+        <a href="/delete${child.getPaths()[0]}">[X]</a>
+    </span>
+</li>
+<li tal:condition="len(children) == 0">Empty folder</li>  
+</ul>
+<span metal:use-macro="load: paging.pt"></span>
+<span tal:condition="canCreateFolder or canCreateDocument">
+    <div>
+    <h4 class="collapsible">Folder Actions...</h4>
+    <div>
+    <span tal:condition="canCreateFolder">
+        <h5 class="collapsible">Create Folder...</h5>
+    	<div>
+            <form method="post" action="/createFolder${path}">
+            Folder name: <input type="text" name="name" />
+      	        <input type="hidden" name="targetPath" value="${path}" />
+    	        <button type="submit" name="Create" value="submit">Create</button>
+            </form>
+        </div>
+    </span>
+    <span tal:condition="canCreateDocument">
+        <h5 class="collapsible">Upload File...</h5>
+        <div>
+            <form method="post" action="/uploadFile${path}" enctype="multipart/form-data">
+            File: <input type="file" name="file" />
+      	        <button type="submit" name="Upload" value="submit">Upload</button>
+            </form>
+        </div>
+        <h5 class="collapsible">Create Plain Content...</h5>
+        <div>
+            <div tal:content="structure form">form</div>
+        </div>
+    </span>
+    </div>
+</span>
+</div>
+</div>

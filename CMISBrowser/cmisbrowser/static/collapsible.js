@@ -1,0 +1,13 @@
+jQuery(document).ready(function($){
+    $('.collapsible').hover(
+        function(){
+            $(this).css('text-decoration','underline');
+        },
+        function(){
+            $(this).css('text-decoration','none');
+        });
+    $('.collapsible').next().hide();
+    $('.collapsible').click(function(){
+        $(this).next().slideToggle();
+    });
+});

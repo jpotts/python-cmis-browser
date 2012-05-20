@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      metal:define-macro="layout">
+<head>
+    <title>CMIS Browser - ${page_title}</title>
+    <link rel="stylesheet" href="/deform_static/css/form.css"
+          type="text/css" />
+    <script type="text/javascript"
+            src="/deform_static/scripts/jquery-1.4.2.min.js"></script>
+    <script type="text/javascript"
+            src="/deform_static/scripts/deform.js"></script>
+    <script type="text/javascript"
+            src="/static/collapsible.js"></script>
+</head>
+<body>
+<span metal:use-macro="load: header.pt"></span>
+<hr />
+<span metal:use-macro="load: nav.pt"></span>
+<hr />
+<div metal:define-slot="content"></div>
+<hr />
+<span metal:use-macro="load: footer.pt"></span>
+</body>
+</html>

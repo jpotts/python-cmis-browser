@@ -1,0 +1,5 @@
+<span metal:define-macro="nav">
+<span tal:condition="skip_count > 0 or children.hasNext()">
+    <center><a tal:condition="skip_count > 0" href="/path${path}?maxItems=${page_size}&skipCount=${skip_count - page_size}">Previous Page</a><span tal:condition="skip_count > 0 and children.hasNext()"> | </span><a tal:condition="children.hasNext()" href="/path${path}?maxItems=${page_size}&skipCount=${skip_count + page_size}">Next Page</a></center>
+</span>
+</span>
