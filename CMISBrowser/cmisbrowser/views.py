@@ -41,7 +41,7 @@ def path(request):
     path = request.matchdict['path']
     path = '/' + path
     repo = request.client.defaultRepository
-    folder = repo.getObjectByPath(path)
+    folder = repo.getObjectByPath(path.encode('utf-8'))
     folderActions = folder.getAllowableActions()
     pageSize = PAGE_SIZE
     skipCount = 0
@@ -54,7 +54,8 @@ def path(request):
 
     rs = folder.getChildren(includeAllowableActions=True,
                                 maxItems=pageSize,
-                                skipCount=skipCount)
+                                skipCount=skipCount,
+                                orderBy='cmis:name,ASC')
  
     # set up the new content form
     schema = NewContentForm()
@@ -74,7 +75,7 @@ def details(request):
     path = request.matchdict['path']
     path = '/' + path
     repo = request.client.defaultRepository
-    object = repo.getObjectByPath(path)    
+    object = repo.getObjectByPath(path.encode('utf-8'))    
     return {'layout': site_layout(),
             'page_title': 'Details',
             'path': path,
@@ -85,7 +86,7 @@ def get_file(request):
     path = request.matchdict['path']
     path = '/' + path
     repo = request.client.defaultRepository
-    object = repo.getObjectByPath(path)    
+    object = repo.getObjectByPath(path.encode('utf-8'))    
     return Response(body=object.getContentStream().read(), content_type=str(object.properties['cmis:contentStreamMimeType']))
 
 @view_config(route_name='createFolder')
