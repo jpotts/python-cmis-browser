@@ -2,6 +2,7 @@
     <div metal:fill-slot="content">
 <span metal:use-macro="load: breadcrumb.pt"></span>
 <span metal:use-macro="load: paging.pt"></span>
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://localhost:8081/feed${path}" />
 <ul>
 <li tal:repeat="child children" tal:switch="child.getAllowableActions()['canGetChildren']">
     <?python

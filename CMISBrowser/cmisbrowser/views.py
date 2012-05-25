@@ -10,6 +10,7 @@ from deform.widget import TextAreaWidget, HiddenWidget
 from pyramid.renderers import get_renderer
 
 PAGE_SIZE = 20
+FEED_SIZE = 100
 
 def site_layout():
     renderer = get_renderer("templates/global_layout.pt")
@@ -69,6 +70,23 @@ def path(request):
             'canCreateFolder': folderActions['canCreateFolder'],
             'children': rs,
             'form': contentForm.render()}
+
+@view_config(route_name='feed', renderer='templates/feed.pt')
+def feed(request):
+    path = request.matchdict['path']
+    path = '/' + path
+    repo = request.client.defaultRepository
+    folder = repo.getObjectByPath(path.encode('utf-8'))
+
+    rs = folder.getChildren(includeAllowableActions=False,
+                                maxItems=FEED_SIZE,
+                                orderBy='cmis:lastModificationDate,DESC')
+
+    return {'layout': site_layout(),
+            'page_title': 'Recently Modified Documents in ' + folder.name,
+            'page_size': FEED_SIZE,
+            'path': path,
+            'children': rs}
 
 @view_config(route_name='details', renderer='templates/details.pt')
 def details(request):

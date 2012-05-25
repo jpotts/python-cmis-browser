@@ -14,6 +14,7 @@ def main(global_config, **settings):
     config.add_route('createFolder', '/createFolder/{path:.*}')
     config.add_route('createContent', '/createContent/{path:.*}')
     config.add_route('uploadFile', '/uploadFile/{path:.*}')
-    config.add_route('delete', '/delete/{path:.*}')                
+    config.add_route('delete', '/delete/{path:.*}')
+    config.add_route('feed', '/feed/{path:.*}')    
     config.scan()
     return config.make_wsgi_app()

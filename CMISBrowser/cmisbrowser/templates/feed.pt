@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+<channel>
+    <title>${page_title}</title>
+    <description>The ${page_size} most recently modified documents in ${path}</description>
+    <link>http://localhost:8081/feed${path}</link>
+    <item tal:repeat="child children">
+        <span tal:omit-tag="" tal:condition="'cmis:contentStreamMimeType' in child.properties">
+        <?python
+        if path == '/':
+            childPath = '/' + child.name
+        else:
+            childPath = path + '/' + child.name
+        ?>
+        <title>${child.name}</title>
+        <description>${child.name} (${child.properties['cmis:contentStreamMimeType']}, ${child.properties['cmis:contentStreamLength']} bytes) Last modified on ${child.properties['cmis:lastModificationDate']} by ${child.properties['cmis:lastModifiedBy']}</description>
+        <link>http://localhost:8081/details${childPath}</link>
+        <guid isPermaLink="false">${child.id}</guid>
+        <pubDate>${child.properties['cmis:lastModificationDate']}</pubDate>
+        </span>
+    </item>
+</channel>
+</rss>
