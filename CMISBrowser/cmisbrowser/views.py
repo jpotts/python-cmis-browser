@@ -8,6 +8,7 @@ import colander
 from deform import Form, ValidationFailure
 from deform.widget import TextAreaWidget, HiddenWidget
 from pyramid.renderers import get_renderer
+import mimetypes
 
 PAGE_SIZE = 20
 FEED_SIZE = 100
@@ -140,7 +141,11 @@ def upload_file(request):
         targetPath = "/" + request.matchdict['path']
         targetFolder = request.client.defaultRepository.getObjectByPath(targetPath)
         uploadedFile = request.POST.get('file')
-        doc = targetFolder.createDocument(uploadedFile.filename, contentFile=uploadedFile.file)
+        mimetype, encoding = mimetypes.guess_type(uploadedFile.filename)
+        doc = targetFolder.createDocument(uploadedFile.filename,
+                                          contentFile=uploadedFile.file,
+                                          contentType=mimetype
+                                          )
         return HTTPFound(location="/path" + targetPath)
 
 @view_config(route_name='delete')
@@ -151,7 +156,13 @@ def delete(request):
         targetObj.deleteTree()
     else:
         targetObj.delete()
-    return HTTPFound(location="/path" + '/'.join(targetPath.split('/')[:-1]))
+    pathPartList = targetPath.split('/')[:-1]
+    if len(pathPartList) <= 1:
+        redirectPath = "/path/"
+    else:
+        redirectPath = "/path" + '/'.join(pathPartList)
+    print pathPartList
+    return HTTPFound(location=redirectPath)
 
 class NewContentForm(colander.MappingSchema):
     name = colander.SchemaNode(colander.String())
